@@ -49,21 +49,25 @@ function populate_rankings(division) {
     
     for (let i = 0; i < rankings.length; i++) {
         const cell = table.rows[i].cells[0];
-        cell.textContent = rankings[i]
+        cell.textContent = rankings[i];
     }
 }
+
+const found = []
 
 async function check_input(str) {
     const res = await fetch('/api/d1m');
     const teams = await res.json();
     const container = document.getElementById('quiz-container');
-    const table = container.querySelector('table')
+    const table = container.querySelector('table');
     
     const match = teams.find(team => team.aliases.some(alias => alias.toLowerCase() === str.value.toLowerCase()));
 
-    if (match) {
+    if (match && found.indexOf(match.id) == -1) {
+        found.push(match.id)
         const cell = table.rows[match.id - 1].cells[1];
-        cell.textContent = match.teamname
+        cell.textContent = match.teamname;
+        str.value = '';
     }
 }
 
