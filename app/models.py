@@ -1,4 +1,4 @@
-from sqlmodel import Field, SQLModel, Session, create_engine
+from sqlmodel import JSON, Column, Field, SQLModel, Session, create_engine
 from typing import Annotated
 from fastapi import Depends
 
@@ -21,6 +21,7 @@ class Team(SQLModel, table=True):
     id: int = Field(default=None, primary_key=True)
     school: str
     teamname: str
+    aliases: list[str] = Field(default_factory=list, sa_column=Column(JSON))
     division: str
     finish: str
     rank: int

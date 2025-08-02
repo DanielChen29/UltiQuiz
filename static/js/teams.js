@@ -59,7 +59,7 @@ async function check_input(str) {
     const container = document.getElementById('quiz-container');
     const table = container.querySelector('table')
     
-    const match = teams.find(team => team.school.toLowerCase() === str.value.toLowerCase());
+    const match = teams.find(team => team.aliases.some(alias => alias.toLowerCase() === str.value.toLowerCase()));
 
     if (match) {
         const cell = table.rows[match.id - 1].cells[1];
