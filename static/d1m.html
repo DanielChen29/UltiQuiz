@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UltiQuiz</title>
+</head>
+<body>
+    <h1>Can you name every D1 Men's team at 2025 nationals?</h1>
+    <a href="/">Home</a>
+    <div id="quiz-container">
+        <label id="answerText">Enter Team:</label>
+        <input type="text" id="inputBox" 
+        oninput="check_input(this);" autocapitalize="off" 
+        spellcheck="false" autocomplete="off" autocorrect="off">
+    </div>
+    <script src="/static/js/teams.js"></script>
+    <script>
+        load_quiz('d1m');
+        create_quiz_table(20);
+        populate_rankings('d1m');
+    </script>
+</body>
+</html>
