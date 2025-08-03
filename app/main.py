@@ -14,15 +14,11 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 def homepage():
     return FileResponse("static/index.html")
 
-@app.get("/d1m")
-def serve_d1mens():
-    return FileResponse("static/d1m.html")
+@app.get("/teams_quiz/{division}")
+def serve_teams_quiz():
+    return FileResponse("static/teams.html")
 
-@app.get("/api/d1m")
-def get_d1m(
-    session: SessionDep,
-    offset: int = 0,
-    limit: Annotated[int, Query(le=100)] = 100,
-) -> list[Team]:
-    teams = session.exec(select(Team).offset(offset).limit(limit)).all()
+@app.get("/api/teams/{division}")
+def get_teams(division: str, session: SessionDep) -> list[Team]:
+    teams = session.exec(select(Team).where(Team.division == division)).all()
     return teams

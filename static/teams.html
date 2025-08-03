@@ -11,15 +11,9 @@
     <div id="quiz-container">
         <p id="score">Score: 0/20</p>
         <label id="answerText">Enter Team:</label>
-        <input type="text" id="inputBox" 
-        oninput="check_input(this);" autocapitalize="off" 
+        <input type="text" id="inputBox" autocapitalize="off" 
         spellcheck="false" autocomplete="off" autocorrect="off">
     </div>
     <script src="/static/js/teams.js"></script>
-    <script>
-        load_quiz('d1m');
-        create_quiz_table(20);
-        populate_rankings('d1m');
-    </script>
 </body>
 </html>

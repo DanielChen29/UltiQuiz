@@ -1,13 +1,35 @@
-async function load_quiz(quiz) {
-    const res = await fetch('/api/' + quiz);
+async function main() {
+    const division = window.location.pathname.split("/").pop();
+
+    let rows, rankings;
+
+    if (division.substring(0,2) == 'd1') {
+        rows = 20
+        rankings = ['1', '2', '3T', '3T', '5T', '5T', '5T', '5T', 
+            '9T', '9T', '9T', '9T', '13T', '13T', '15T', '15T', 
+            '17T', '17T', '19T', '19T'];
+    } else { // d3
+        rows = 16
+        rankings = ['1', '2', '3T', '3T', '5T', '5T', '7T', '7T', 
+            '9', '10', '11', '12', '13', '14', '15', '16',];
+    }
+
+    const res = await fetch('/api/teams/' + division);
     const teams = await res.json();
     const container = document.getElementById('quiz-container');
-    teams.forEach(team => {
-        const p = document.createElement('p');
-        p.textContent = team.school;
-        container.appendChild(p);
-    })
+
+    create_quiz_table(rows);
+    populate_rankings(rankings);
+
+    const found = [];
+    const state = {matches: 0};
+
+    const inputBox = document.getElementById('inputBox');
+    inputBox.addEventListener('input', () =>
+        check_input(inputBox, container, teams, rows, state, found)
+    );
 }
+
 
 function create_quiz_table(rows) {
     const container = document.getElementById('quiz-container');
@@ -32,17 +54,7 @@ function create_quiz_table(rows) {
     container.appendChild(table);
 }
 
-function populate_rankings(division) {
-    rankings = []
-
-    if (division == 'd1m' || division == 'd1w') {
-        rankings = ['1', '2', '3T', '3T', '5T', '5T', '5T', '5T', 
-            '9T', '9T', '9T', '9T', '13T', '13T', '15T', '15T', 
-            '17T', '17T', '19T', '19T'];
-    } else { //d3m or d3w
-        rankings = ['1', '2', '3T', '3T', '5T', '5T', '7T', '7T', 
-            '9', '10', '11', '12', '13', '14', '15', '16',];
-    }
+function populate_rankings(rankings) {
 
     const container = document.getElementById('quiz-container');
     const table = container.querySelector('table')
@@ -53,15 +65,9 @@ function populate_rankings(division) {
     }
 }
 
-const found = []
-let matches = 0
-
-async function check_input(str) {
-    const res = await fetch('/api/d1m');
-    const teams = await res.json();
-    const container = document.getElementById('quiz-container');
+function check_input(str, container, teams, rows, state, found) {
     const table = container.querySelector('table');
-    
+
     const match = teams.find(team => team.aliases.some(alias => alias.toLowerCase() === str.value.toLowerCase()));
 
     if (match && found.indexOf(match.id) == -1) {
@@ -70,11 +76,12 @@ async function check_input(str) {
         const cell = table.rows[match.id - 1].cells[1];
         cell.textContent = match.teamname;
 
-        matches++;
+        state.matches++;
         const score = document.getElementById("score");
-        score.textContent = "Score: " + matches + "/20";
+        score.textContent = "Score: " + state.matches + "/" + rows;
 
         str.value = '';
     }
 }
 
+document.addEventListener("DOMContentLoaded", main);
