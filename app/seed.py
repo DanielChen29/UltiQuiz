@@ -1,13 +1,16 @@
 from models import Team, engine, create_db_and_tables
 from sqlmodel import Session, delete
+import pandas as pd
 
-teams = [
-    {"school": "Carleton College", "teamname": "CUT", "aliases": ["Carleton", "CUT"],"division": "d1m", "finish": "1", "rank": 1},
-    {"school": "Colorado", "teamname": "Mamabird", "aliases": ["Colorado", "Mamabird"], "division": "d1m", "finish": "2", "rank": 2},
-    {"school": "Oregon", "teamname": "Ego", "aliases": ["Oregon", "Ego"], "division": "d1m", "finish": "3T", "rank": 3},
-    {"school": "Massachusetts", "teamname": "ZooDisc", "aliases": ["UMass", "ZooDisc"], "division": "d1m", "finish": "3T", "rank": 4},
-    {"school": "North Carolina", "teamname": "Darkside", "aliases": ["UNC", "Darkside"], "division": "d1m", "finish": "5T", "rank": 5},
-]
+df = pd.read_excel('data/ultiquiz_seed.xlsx', sheet_name='Teams')
+
+teams = []
+
+for row_tuple in df.itertuples():
+    alias_list = row_tuple.aliases.split(',')
+
+    teams.append({"school": row_tuple.school, "teamname": row_tuple.teamname, "aliases": alias_list, 
+                  "division": row_tuple.division, "finish": row_tuple.finish, "rank": row_tuple.rank})
 
 create_db_and_tables()
 
