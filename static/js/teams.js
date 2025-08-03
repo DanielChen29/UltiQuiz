@@ -54,6 +54,7 @@ function populate_rankings(division) {
 }
 
 const found = []
+let matches = 0
 
 async function check_input(str) {
     const res = await fetch('/api/d1m');
@@ -64,9 +65,15 @@ async function check_input(str) {
     const match = teams.find(team => team.aliases.some(alias => alias.toLowerCase() === str.value.toLowerCase()));
 
     if (match && found.indexOf(match.id) == -1) {
-        found.push(match.id)
+        found.push(match.id);
+
         const cell = table.rows[match.id - 1].cells[1];
         cell.textContent = match.teamname;
+
+        matches++;
+        const score = document.getElementById("score");
+        score.textContent = "Score: " + matches + "/20";
+
         str.value = '';
     }
 }
