@@ -40,7 +40,7 @@ function create_quiz_table(rows) {
     for (let i = 0; i < rows; i++) {
         const tr = document.createElement('tr');
 
-        for (let j = 0; j < 2; j++) {
+        for (let j = 0; j < 3; j++) {
             const td = document.createElement('td');
             td.style.border = '1px solid black';
             td.style.padding = '8px';
@@ -73,8 +73,11 @@ function check_input(str, container, teams, rows, state, found) {
     if (match && found.indexOf(match.id) == -1) {
         found.push(match.id);
 
-        const cell = table.rows[match.id - 1].cells[1];
-        cell.textContent = match.teamname;
+        const school_cell = table.rows[match.id - 1].cells[1];
+        school_cell.textContent = match.school;
+
+        const name_cell = table.rows[match.id - 1].cells[2];
+        name_cell.textContent = match.teamname;
 
         state.matches++;
         const score = document.getElementById("score");
