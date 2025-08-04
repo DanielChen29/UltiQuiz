@@ -18,20 +18,28 @@ async function main() {
     const teams = await res.json();
     const container = document.getElementById('quiz-container');
 
-    create_quiz_table(rows);
-    populate_rankings(rankings);
+    create_quiz_table(rows, rankings);
+
+    const start_button = document.getElementById("start-button");
+    const input_box = document.getElementById('input-box');
+    const input_label = document.getElementById('input-label');
+
+    start_button.addEventListener('click', () => {
+        start_button.style.display = 'none';
+        input_label.style.display = 'block';
+        input_box.style.display = 'block';
+        input_box.focus();
+    });
 
     const found = [];
     const state = {matches: 0};
-
-    const inputBox = document.getElementById('inputBox');
-    inputBox.addEventListener('input', () =>
-        check_input(inputBox, container, teams, rows, state, found)
+    input_box.addEventListener('input', () =>
+        check_input(input_box, container, teams, rows, state, found)
     );
 }
 
 
-function create_quiz_table(rows) {
+function create_quiz_table(rows, rankings) {
     const container = document.getElementById('quiz-container');
 
     const table = document.createElement('table');
@@ -44,7 +52,12 @@ function create_quiz_table(rows) {
             const td = document.createElement('td');
             td.style.border = '1px solid black';
             td.style.padding = '8px';
-            td.textContent = '';
+
+            if (j == 0) {
+                td.textContent = rankings[i];
+            } else {
+                td.textContent = '';
+            }
             tr.appendChild(td);
         }
 
@@ -52,17 +65,6 @@ function create_quiz_table(rows) {
     }
 
     container.appendChild(table);
-}
-
-function populate_rankings(rankings) {
-
-    const container = document.getElementById('quiz-container');
-    const table = container.querySelector('table')
-    
-    for (let i = 0; i < rankings.length; i++) {
-        const cell = table.rows[i].cells[0];
-        cell.textContent = rankings[i];
-    }
 }
 
 function check_input(str, container, teams, rows, state, found) {
