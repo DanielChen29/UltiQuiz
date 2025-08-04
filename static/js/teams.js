@@ -24,11 +24,22 @@ async function main() {
     const input_box = document.getElementById('input-box');
     const input_label = document.getElementById('input-label');
 
+    const timer = document.getElementById("timer");
+    let seconds = 180;  
+
     start_button.addEventListener('click', () => {
         start_button.style.display = 'none';
         input_label.style.display = 'block';
         input_box.style.display = 'block';
         input_box.focus();
+        const timer_interval = setInterval(() => {
+            seconds--;
+            timer.textContent = format_time(seconds);
+            if (seconds <= 0 || state.matches == rows) {
+                clearInterval(timer_interval)
+                end_quiz(input_box, input_label, timer, state, rows, document)
+            };
+        }, 1000);
     });
 
     const found = [];
@@ -37,7 +48,6 @@ async function main() {
         check_input(input_box, container, teams, rows, state, found)
     );
 }
-
 
 function create_quiz_table(rows, rankings) {
     const container = document.getElementById('quiz-container');
@@ -67,6 +77,12 @@ function create_quiz_table(rows, rankings) {
     container.appendChild(table);
 }
 
+function format_time(seconds) {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return m + ":" + s.toString().padStart(2, '0');
+}
+
 function check_input(str, container, teams, rows, state, found) {
     const table = container.querySelector('table');
 
@@ -87,6 +103,16 @@ function check_input(str, container, teams, rows, state, found) {
 
         str.value = '';
     }
+}
+
+function end_quiz(input_box, input_label, timer, state, rows, document) {
+    input_box.style.display = 'none';
+    input_label.style.display = 'none';
+    timer.style.display = 'none';
+
+    const end_card = document.getElementById('end-card');
+    end_card.textContent = "You scored " + state.matches + " out of " + rows
+    end_card.style.display = 'block';
 }
 
 document.addEventListener("DOMContentLoaded", main);
