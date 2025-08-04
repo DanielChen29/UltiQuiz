@@ -14,6 +14,17 @@ async function main() {
             '9', '10', '11', '12', '13', '14', '15', '16',];
     }
 
+    const title = document.getElementById("title")
+    if (division === 'd1m') {
+        title.textContent = "Can you name every team at 2025 D1 Men's Nationals?";
+        } else if (division === 'd1w') {
+        title.textContent = "Can you name every team at 2025 D1 Women's Nationals?";
+        } else if (division === 'd3m') {
+        title.textContent = "Can you name every team at 2025 D3 Men's Nationals?";
+        } else { //d3w
+        title.textContent = "Can you name every team at 2025 D3 Women's Nationals?";
+    }
+
     const res = await fetch('/api/teams/' + division);
     const teams = await res.json();
     const container = document.getElementById('quiz-container');
@@ -37,7 +48,7 @@ async function main() {
             timer.textContent = format_time(seconds);
             if (seconds <= 0 || state.matches == rows) {
                 clearInterval(timer_interval)
-                end_quiz(input_box, input_label, timer, state, rows, document)
+                end_quiz(input_box, input_label, timer, state, rows)
             };
         }, 1000);
     });
@@ -105,7 +116,7 @@ function check_input(str, container, teams, rows, state, found) {
     }
 }
 
-function end_quiz(input_box, input_label, timer, state, rows, document) {
+function end_quiz(input_box, input_label, timer, state, rows) {
     input_box.style.display = 'none';
     input_label.style.display = 'none';
     timer.style.display = 'none';
