@@ -31,6 +31,8 @@ async function main() {
 
     create_quiz_table(rows, rankings);
 
+    console.log("Teams data:", teams);
+
     const start_button = document.getElementById("start-button");
     const input_box = document.getElementById('input-box');
     const input_label = document.getElementById('input-label');
@@ -99,13 +101,13 @@ function check_input(str, container, teams, rows, state, found) {
 
     const match = teams.find(team => team.aliases.some(alias => alias.toLowerCase() === str.value.toLowerCase()));
 
-    if (match && found.indexOf(match.id) == -1) {
-        found.push(match.id);
+    if (match && found.indexOf(match.rank) == -1) {
+        found.push(match.rank);
 
-        const school_cell = table.rows[match.id - 1].cells[1];
+        const school_cell = table.rows[match.rank - 1].cells[1];
         school_cell.textContent = match.school;
 
-        const name_cell = table.rows[match.id - 1].cells[2];
+        const name_cell = table.rows[match.rank - 1].cells[2];
         name_cell.textContent = match.teamname;
 
         state.matches++;

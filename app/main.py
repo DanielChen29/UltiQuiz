@@ -15,7 +15,7 @@ def homepage():
     return FileResponse("static/index.html")
 
 @app.get("/teams_quiz/{division}")
-def serve_teams_quiz():
+def serve_teams_quiz(division: str):
     return FileResponse("static/teams.html")
 
 @app.get("/api/teams/{division}")
