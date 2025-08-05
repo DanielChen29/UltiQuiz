@@ -71,10 +71,7 @@ async function main() {
  * @param {list} rankings - rankings of the given teams
  */
 function create_quiz_table(rows, rankings) {
-    const container = document.getElementById('quiz-container');
-
-    const table = document.createElement('table');
-    table.style.borderCollapse = 'collapse';
+    const table = document.getElementById('quiz-table');
 
     for (let i = 0; i < rows; i++) {
         const tr = document.createElement('tr');
@@ -94,8 +91,6 @@ function create_quiz_table(rows, rankings) {
 
         table.appendChild(tr);
     }
-
-    container.appendChild(table);
 }
 
 /**
@@ -128,10 +123,10 @@ function check_input(str, container, teams, rows, state, found) {
     if (match && found.indexOf(match.rank) == -1) {
         found.push(match.rank);
 
-        const school_cell = table.rows[match.rank - 1].cells[1];
+        const school_cell = table.rows[match.rank].cells[1];
         school_cell.textContent = match.school;
 
-        const name_cell = table.rows[match.rank - 1].cells[2];
+        const name_cell = table.rows[match.rank].cells[2];
         name_cell.textContent = match.teamname;
 
         state.matches++;

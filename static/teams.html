@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UltiQuiz</title>
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
 </head>
 <body>
     <h1 id="title"></h1>
@@ -15,7 +16,15 @@
         <button id="start-button" type="button">Start Quiz</button>
         <label id="input-label" style="display:none">Enter Team:</label>
         <input id="input-box" type="text" style="display:none"
-        autocapitalize="off" spellcheck="false" autocomplete="off" autocorrect="off">
+        autocapitalize="off" spellcheck="false" autocomplete="off" autocorrect="off"></input>
+        <table id="quiz-table" style="border-collapse:collapse;">
+            <tr>
+                <th>Nationals Finish</th>
+                <th>School</th>
+                <th>Team Name</th>
+              </tr>
+        </table>
+        
     </div>
     <script src="/static/js/teams.js"></script>
 </body>
