@@ -63,6 +63,9 @@ async function main() {
     input_box.addEventListener('input', () =>
         check_input(input_box, container, teams, rows, state, found)
     );
+    input_box.addEventListener('keydown', (e) =>
+        check_input(input_box, container, teams, rows, state, found, true)
+    );
 }
 
 /**
@@ -112,17 +115,30 @@ function format_time(seconds) {
 /**
  * check whether a given guess in the input box corresponds to a team alias
  * if so, fill in table and update score
- * @param {String} str 
- * @param {HTMLElement} container 
- * @param {list} teams 
- * @param {int} rows 
- * @param {object} state 
- * @param {list} found 
+ * @param {String} str - input string
+ * @param {HTMLElement} container - input div
+ * @param {list} teams - teams list
+ * @param {int} rows - rows in table
+ * @param {object} state - object storing number of correct guesses
+ * @param {list} found - list of found teams
+ * @param {boolean} enter_down - boolean if enter pressed
  */
-function check_input(str, container, teams, rows, state, found) {
+function check_input(str, container, teams, rows, state, found, enter_down = false) {
     const table = container.querySelector('table');
+    const false_message = document.getElementById("false-message");
 
     const match = teams.find(team => team.aliases.some(alias => alias.toLowerCase() === str.value.toLowerCase()));
+
+    if (enter_down == true && str.value.trim() != "") {
+        const false_message = document.getElementById("false-message");
+        if (match) {
+            false_message.textContent = "Already guessed: " + match.school + " " + match.teamname;
+        } else {
+            false_message.textContent = "Incorrect";
+        }
+    } else {
+        false_message.textContent = "";
+    }
 
     //if there is a match and it hasn't been found
     if (match && found.indexOf(match.rank) == -1) {
