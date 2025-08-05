@@ -80,6 +80,11 @@ function create_quiz_table(rows, rankings) {
             const td = document.createElement('td');
             td.style.border = '1px solid black';
             td.style.padding = '8px';
+            td.style.textAlign = 'center';
+
+            if (j == 0) td.style.width = '75px';
+            if (j == 1) td.style.width = '150px';
+            if (j == 2) td.style.width = '125px';
 
             if (j == 0) {
                 td.textContent = rankings[i];
