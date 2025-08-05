@@ -18,6 +18,8 @@ def get_session():
 SessionDep = Annotated[Session, Depends(get_session)]
 
 class Team(SQLModel, table=True):
+    """model for teams in team_quiz"""
+
     id: int = Field(default=None, primary_key=True)
     school: str
     teamname: str

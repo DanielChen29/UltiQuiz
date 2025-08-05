@@ -40,11 +40,14 @@ async function main() {
     const timer = document.getElementById("timer");
     let seconds = 180;  
 
+    //listener for start button click
     start_button.addEventListener('click', () => {
         start_button.style.display = 'none';
         input_label.style.display = 'block';
         input_box.style.display = 'block';
         input_box.focus();
+
+        //timer logic
         const timer_interval = setInterval(() => {
             seconds--;
             timer.textContent = format_time(seconds);
@@ -62,6 +65,11 @@ async function main() {
     );
 }
 
+/**
+ * create the unfilled table for the given quiz
+ * @param {int} rows - number of rows in the table
+ * @param {list} rankings - rankings of the given teams
+ */
 function create_quiz_table(rows, rankings) {
     const container = document.getElementById('quiz-container');
 
@@ -90,17 +98,33 @@ function create_quiz_table(rows, rankings) {
     container.appendChild(table);
 }
 
+/**
+ * convert a number of seconds into minutes and seconds
+ * @param {int} seconds 
+ * @returns time in minutes and seconds
+ */
 function format_time(seconds) {
     const m = Math.floor(seconds / 60);
     const s = seconds % 60;
     return m + ":" + s.toString().padStart(2, '0');
 }
 
+/**
+ * check whether a given guess in the input box corresponds to a team alias
+ * if so, fill in table and update score
+ * @param {String} str 
+ * @param {HTMLElement} container 
+ * @param {list} teams 
+ * @param {int} rows 
+ * @param {object} state 
+ * @param {list} found 
+ */
 function check_input(str, container, teams, rows, state, found) {
     const table = container.querySelector('table');
 
     const match = teams.find(team => team.aliases.some(alias => alias.toLowerCase() === str.value.toLowerCase()));
 
+    //if there is a match and it hasn't been found
     if (match && found.indexOf(match.rank) == -1) {
         found.push(match.rank);
 
@@ -118,6 +142,14 @@ function check_input(str, container, teams, rows, state, found) {
     }
 }
 
+/**
+ * when time runs out or all teams have been found or user gives up, end quiz and display score
+ * @param {HTMLElement} input_box 
+ * @param {HTMLElement} input_label 
+ * @param {HTMLElement} timer 
+ * @param {object} state 
+ * @param {int} rows 
+ */
 function end_quiz(input_box, input_label, timer, state, rows) {
     input_box.style.display = 'none';
     input_label.style.display = 'none';
