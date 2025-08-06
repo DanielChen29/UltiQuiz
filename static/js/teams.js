@@ -53,7 +53,7 @@ async function main() {
             timer.textContent = format_time(seconds);
             if (seconds <= 0 || state.matches == rows) {
                 clearInterval(timer_interval)
-                end_quiz(input_box, input_label, timer, state, rows)
+                end_quiz(input_box, input_label, timer, state, rows, teams, found)
             };
         }, 1000);
     });
@@ -166,10 +166,28 @@ function check_input(str, container, teams, rows, state, found, enter_down = fal
  * @param {object} state 
  * @param {int} rows 
  */
-function end_quiz(input_box, input_label, timer, state, rows) {
+function end_quiz(input_box, input_label, timer, state, rows, teams, found) {
     input_box.style.display = 'none';
     input_label.style.display = 'none';
     timer.style.display = 'none';
+
+    const not_found = [];
+
+    teams.forEach(function(team) {
+        const match = found.find(found_team => found_team.id === team.id);
+        if (!match) not_found.push(team);
+    });
+
+    const table = document.getElementById("quiz-table");
+    not_found.forEach(function(team) {
+        const school_cell = table.rows[team.rank].cells[1];
+        school_cell.style.color = "red";
+        school_cell.textContent = team.school;
+    
+        const name_cell = table.rows[team.rank].cells[2];
+        name_cell.style.color = "red";
+        name_cell.textContent = team.teamname;
+    });
 
     const end_card = document.getElementById('end-card');
     end_card.textContent = "You scored " + state.matches + " out of " + rows
