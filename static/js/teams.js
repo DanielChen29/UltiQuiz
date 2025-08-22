@@ -1,3 +1,5 @@
+console.log("hello world");
+
 async function main() {
     const division = window.location.pathname.split("/").pop();
 
@@ -33,9 +35,10 @@ async function main() {
 
     console.log("Teams data:", teams);
 
-    const start_button = document.getElementById("start-button");
+    const start_button = document.getElementById('start-button');
     const input_box = document.getElementById('input-box');
     const input_label = document.getElementById('input-label');
+    const give_up_button = document.getElementById('give-up-button');
 
     const timer = document.getElementById("timer");
     let seconds = 180;  
@@ -45,6 +48,7 @@ async function main() {
         start_button.style.display = 'none';
         input_label.style.display = 'block';
         input_box.style.display = 'block';
+        give_up_button.style.display = 'block';
         input_box.focus();
 
         //timer logic
@@ -58,14 +62,19 @@ async function main() {
         }, 1000);
     });
 
+    give_up_button.addEventListener('click', () => {
+        give_up_button.style.display = 'none';
+        end_quiz(input_box, input_label, timer, state, rows, teams, found);
+    });
+
     const found = [];
     const state = {matches: 0};
     input_box.addEventListener('input', () =>
         check_input(input_box, container, teams, rows, state, found)
     );
-    input_box.addEventListener('keydown', (e) =>
-        check_input(input_box, container, teams, rows, state, found, true)
-    );
+    input_box.addEventListener('keydown', (e) => {
+        if (e.key == 'Enter') check_input(input_box, container, teams, rows, state, found, true)
+    });
 }
 
 /**
@@ -173,10 +182,14 @@ function end_quiz(input_box, input_label, timer, state, rows, teams, found) {
 
     const not_found = [];
 
+    console.log("found: ", found)
+
     teams.forEach(function(team) {
-        const match = found.find(found_team => found_team.id === team.id);
+        const match = found.find(found_team => found_team === team.id);
         if (!match) not_found.push(team);
     });
+
+    console.log("not found: ", not_found)
 
     const table = document.getElementById("quiz-table");
     not_found.forEach(function(team) {
