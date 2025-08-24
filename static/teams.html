@@ -14,11 +14,13 @@
         <p id="timer">3:00</p>
         <p id="score">Score: 0/20</p>
         <button id="start-button" type="button">Start Quiz</button>
-        <label id="input-label" for="input-box" style="display:none">Enter Team:</label>
-        <input id="input-box" type="text" style="display:none" autocapitalize="off" 
-        spellcheck="false" autocomplete="off" autocorrect="off"></input>
-        <p id="false-message"></p>
-        <button id="give-up-button" type="button" style="display:none">Give Up</button>
+        <div id="response-container" style="display:none">  
+            <label id="input-label" for="input-box">Enter Team:</label>
+            <input id="input-box" type="text" autocapitalize="off" 
+            spellcheck="false" autocomplete="off" autocorrect="off"></input>
+            <p id="false-message"></p>
+            <button id="give-up-button" type="button">Give Up</button>
+        </div>
         <table id="quiz-table" style="border-collapse:collapse;">
             <tr>
                 <th>Standings</th>

@@ -1,5 +1,3 @@
-console.log("hello world");
-
 async function main() {
     const division = window.location.pathname.split("/").pop();
 
@@ -36,9 +34,13 @@ async function main() {
     console.log("Teams data:", teams);
 
     const start_button = document.getElementById('start-button');
+
     const input_box = document.getElementById('input-box');
     const input_label = document.getElementById('input-label');
     const give_up_button = document.getElementById('give-up-button');
+    const response_container = document.getElementById('response-container');
+
+    console.log("response container:", response_container);
 
     const timer = document.getElementById("timer");
     let seconds = 180;  
@@ -46,9 +48,7 @@ async function main() {
     //listener for start button click
     start_button.addEventListener('click', () => {
         start_button.style.display = 'none';
-        input_label.style.display = 'block';
-        input_box.style.display = 'block';
-        give_up_button.style.display = 'block';
+        response_container.style.display = 'block';
         input_box.focus();
 
         //timer logic
@@ -57,14 +57,13 @@ async function main() {
             timer.textContent = format_time(seconds);
             if (seconds <= 0 || state.matches == rows) {
                 clearInterval(timer_interval)
-                end_quiz(input_box, input_label, timer, state, rows, teams, found)
+                end_quiz(response_container, timer, state, rows, teams, found)
             };
         }, 1000);
     });
 
     give_up_button.addEventListener('click', () => {
-        give_up_button.style.display = 'none';
-        end_quiz(input_box, input_label, timer, state, rows, teams, found);
+        end_quiz(response_container, timer, state, rows, teams, found);
     });
 
     const found = [];
@@ -175,9 +174,8 @@ function check_input(str, container, teams, rows, state, found, enter_down = fal
  * @param {object} state 
  * @param {int} rows 
  */
-function end_quiz(input_box, input_label, timer, state, rows, teams, found) {
-    input_box.style.display = 'none';
-    input_label.style.display = 'none';
+function end_quiz(response_container, timer, state, rows, teams, found) {
+    response_container.style.display = 'none';
     timer.style.display = 'none';
 
     const not_found = [];
