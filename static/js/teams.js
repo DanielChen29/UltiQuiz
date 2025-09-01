@@ -36,7 +36,6 @@ async function main() {
     const start_button = document.getElementById('start-button');
 
     const input_box = document.getElementById('input-box');
-    const input_label = document.getElementById('input-label');
     const give_up_button = document.getElementById('give-up-button');
     const response_container = document.getElementById('response-container');
 
@@ -201,8 +200,14 @@ function end_quiz(response_container, timer, state, rows, teams, found) {
     });
 
     const end_card = document.getElementById('end-card');
-    end_card.textContent = "You scored " + state.matches + " out of " + rows
+    end_card.textContent = "You scored " + state.matches + " out of " + rows;
     end_card.style.display = 'block';
+
+    const play_again_button = document.getElementById('play-again');
+    play_again_button.style.display = 'block';
+    play_again_button.addEventListener('click', () => {
+        window.location.reload();
+    });
 }
 
 document.addEventListener("DOMContentLoaded", main);
