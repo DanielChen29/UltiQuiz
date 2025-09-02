@@ -94,7 +94,7 @@ function create_quiz_table(rows, rankings) {
 
             if (j == 0) td.style.width = '75px';
             if (j == 1) td.style.width = '150px';
-            if (j == 2) td.style.width = '125px';
+            if (j == 2) td.style.width = '150px';
 
             if (j == 0) {
                 td.textContent = rankings[i];
@@ -176,6 +176,7 @@ function check_input(str, container, teams, rows, state, found, enter_down = fal
 function end_quiz(response_container, timer, state, rows, teams, found) {
     response_container.style.display = 'none';
     timer.style.display = 'none';
+    document.getElementById('entry-interface').style.display = 'none'
 
     const not_found = [];
 
