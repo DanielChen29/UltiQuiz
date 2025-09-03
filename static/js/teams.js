@@ -93,8 +93,8 @@ function create_quiz_table(rows, rankings) {
             td.style.textAlign = 'center';
 
             if (j == 0) td.style.width = '75px';
-            if (j == 1) td.style.width = '150px';
-            if (j == 2) td.style.width = '150px';
+            if (j == 1) td.style.width = '175px';
+            if (j == 2) td.style.width = '175px';
 
             if (j == 0) {
                 td.textContent = rankings[i];

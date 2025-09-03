@@ -4,27 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UltiQuiz</title>
+    <link rel="stylesheet" href="/static/css/style.css">
     <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
 </head>
 <body>
     <h1 id="title"></h1>
     <a href="/">Home</a>
     <div id="quiz-container">
-        <p id="end-card" style="display:none"></p>
-        <button id="play-again" type="button" style="display:none">Play Again</button>
-        <div id="entry-interface" style="position:sticky;top:0;background:white;">
-            <p id="timer">3:00</p>
-            <p id="score">Score: 0/20</p>
-            <button id="start-button" type="button">Start Quiz</button>
-            <div id="response-container" style="display:none;position:sticky;top:0;">  
-                <label id="input-label" for="input-box">Enter Team:</label>
-                <input id="input-box" type="text" autocapitalize="off" 
-                spellcheck="false" autocomplete="off" autocorrect="off"></input>
-                <p id="false-message"></p>
-                <button id="give-up-button" type="button">Give Up</button>
+        <div id="sidebar">
+            <div id='ending'>
+                <p id="end-card" style="display:none"></p>
+                <button id="play-again" type="button" style="display:none">Play Again</button>
+            </div>
+            <div id="entry-interface">
+                <p id="timer">3:00</p>
+                <p id="score">Score: 0/20</p>
+                <button id="start-button" type="button">Start Quiz</button>
+                <div id="response-container" style="display:none;position:sticky;top:0;">  
+                    <label id="input-label" for="input-box">Enter Team:</label>
+                    <input id="input-box" type="text" autocapitalize="off" 
+                    spellcheck="false" autocomplete="off" autocorrect="off"></input>
+                    <p id="false-message"></p>
+                    <button id="give-up-button" type="button">Give Up</button>
+                </div>
             </div>
         </div>
-        <table id="quiz-table" style="border-collapse:collapse;">
+        <table id="quiz-table">
             <tr>
                 <th>Standings</th>
                 <th>School</th>
