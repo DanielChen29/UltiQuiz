@@ -17,6 +17,8 @@ a:hover {
 
 button {
     font-family: inherit;
+    font-weight: bold;
+    border-radius: 10px;
 }
 
 input {
@@ -37,6 +39,7 @@ input {
     background: rgb(110, 110, 110);
     grid-column: 1;
     min-width: 200;
+    border-radius: 10px;
 }
   
 #quiz-table {
@@ -64,5 +67,11 @@ input {
         width: 525px;
         justify-content: center;
     }
+}
+
+#quiz-table-titles {
+    position: sticky;
+    top: 0;
+    background-color: rgb(57, 57, 57);
 }
 
